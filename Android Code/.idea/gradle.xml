@@ -8,8 +8,8 @@
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
         <option name="modules">
           <set>
-            <option value="/media/hasan/My Drive/UBUNTU SYSTEM FILES/Android Studio Files/AndroidStudioProjects/networkcallwithRetrofit" />
-            <option value="/media/hasan/My Drive/UBUNTU SYSTEM FILES/Android Studio Files/AndroidStudioProjects/networkcallwithRetrofit/app" />
+            <option value="/media/hasan/My Drive/UBUNTU SYSTEM FILES/Android Studio Files/AndroidStudioProjects/Retrofit Turorial Git Repo/Android Code" />
+            <option value="/media/hasan/My Drive/UBUNTU SYSTEM FILES/Android Studio Files/AndroidStudioProjects/Retrofit Turorial Git Repo/Android Code/app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
