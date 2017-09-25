@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
             myApiService.userValidityCheck(user, new ResponseCallback<String>() {
                 @Override
                 public void onSuccess(String msg) {
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                    showToast(msg);
                 }
 
                 @Override
                 public void onError(Throwable th) {
-                    Toast.makeText(getApplicationContext(), th.getMessage(), Toast.LENGTH_LONG).show();
+                    showToast(th.getMessage());
                 }
             }); //user credential and listener
 
@@ -78,12 +78,16 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(Throwable th) {
-                    Toast.makeText(getApplicationContext(), th.getMessage(), Toast.LENGTH_LONG).show();
+                    showToast(th.getMessage());
                 }
             }); //user credential and listener
 
         }
         
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
 }
