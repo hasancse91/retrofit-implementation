@@ -6,15 +6,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.hellohasan.networkcallwithretrofit.Model.User;
 import com.hellohasan.networkcallwithretrofit.NetworkRelatedClass.MyApiService;
 import com.hellohasan.networkcallwithretrofit.NetworkRelatedClass.NetworkCallImplementationService;
+import com.hellohasan.networkcallwithretrofit.NetworkRelatedClass.ResponseCallback;
 import com.hellohasan.networkcallwithretrofit.R;
 
-public class MainActivity extends AppCompatActivity implements UserValidityCheckListener, GetJokeListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
     private EditText userIdEditText;
     private EditText passwordEditText;
     private EditText jokeUserIdEditText;
@@ -49,7 +50,17 @@ public class MainActivity extends AppCompatActivity implements UserValidityCheck
 
             //call method of interface
             MyApiService myApiService = new NetworkCallImplementationService();
-            myApiService.userValidityCheck(user, this); //user credential and listener
+            myApiService.userValidityCheck(user, new ResponseCallback<String>() {
+                @Override
+                public void onSuccess(String msg) {
+                    showToast(msg);
+                }
+
+                @Override
+                public void onError(Throwable th) {
+                    showToast(th.getMessage());
+                }
+            }); //user credential and listener
 
         }
         else {
@@ -59,38 +70,24 @@ public class MainActivity extends AppCompatActivity implements UserValidityCheck
 
             //call method of interface
             MyApiService myApiService = new NetworkCallImplementationService();
-            myApiService.getJokeFromServer(userId, this); //user credential and listener
+            myApiService.getJokeFromServer(userId, new ResponseCallback<String>() {
+                @Override
+                public void onSuccess(String joke) {
+                    jokeTextView.setText(joke);
+                }
+
+                @Override
+                public void onError(Throwable th) {
+                    showToast(th.getMessage());
+                }
+            }); //user credential and listener
 
         }
         
     }
 
-
-    /*
-    implemented methods for user validity listener
-     */
-    @Override
-    public void onSuccessUserValidity(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    private void showToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
-
-    @Override
-    public void onFailureUserValidity(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-    } //end of user validity listener's implemented methods
-
-
-    /*
-    implemented methods for getting joke listener
-     */
-    @Override
-    public void onSuccessGetJoke(String joke) {
-        jokeTextView.setText(joke);
-    }
-
-    @Override
-    public void onFailureGetJoke(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-    } //end of getting joke's implemented methods
 
 }
