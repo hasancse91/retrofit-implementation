@@ -1,28 +1,20 @@
 package com.hellohasan.networkcallwithretrofit.Activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hellohasan.networkcallwithretrofit.Interface.ApiInterface;
 import com.hellohasan.networkcallwithretrofit.Model.User;
-import com.hellohasan.networkcallwithretrofit.Model.ServerResponse;
+import com.hellohasan.networkcallwithretrofit.NetworkRelatedClass.MyApiService;
+import com.hellohasan.networkcallwithretrofit.NetworkRelatedClass.NetworkCallImplementationService;
 import com.hellohasan.networkcallwithretrofit.R;
-import com.hellohasan.networkcallwithretrofit.Retrofit.RetrofitApiClient;
 
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UserValidityCheckListener, GetJokeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private ApiInterface apiInterface;
     private EditText userIdEditText;
     private EditText passwordEditText;
     private EditText jokeUserIdEditText;
@@ -33,14 +25,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Create an instance of Interface
-        apiInterface = RetrofitApiClient.getClient().create(ApiInterface.class);
-
         //Initialize the view like EditText, TextView
-        viewInitialization();
+        userIdEditText = (EditText) findViewById(R.id.login_id);
+        passwordEditText = (EditText) findViewById(R.id.login_password);
+        jokeUserIdEditText = (EditText) findViewById(R.id.user_id_for_joke);
+        jokeTextView = (TextView) findViewById(R.id.jokeTextView);
 
     }
-
 
     // Login button event
     public void buttonClickEvent(View view){
@@ -56,65 +47,50 @@ public class MainActivity extends AppCompatActivity {
             user.setUserId(userId);
             user.setPassword(password);
 
-            checkUserValidity(user);
+            //call method of interface
+            MyApiService myApiService = new NetworkCallImplementationService();
+            myApiService.userValidityCheck(user, this); //user credential and listener
+
         }
         else {
             String userId;
 
             userId = jokeUserIdEditText.getText().toString();
 
-            getJokeFromServer(userId);
+            //call method of interface
+            MyApiService myApiService = new NetworkCallImplementationService();
+            myApiService.getJokeFromServer(userId, this); //user credential and listener
+
         }
         
     }
 
 
-    // POST method to determine user validity
-    private void checkUserValidity(User userCredential){
-
-        Call<ServerResponse> call = apiInterface.getUserValidity(userCredential);
-
-        call.enqueue(new Callback<ServerResponse>() {
-
-            @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-
-                ServerResponse validity = response.body();
-                Toast.makeText(getApplicationContext(), validity.getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-        });
+    /*
+    implemented methods for user validity listener
+     */
+    @Override
+    public void onSuccessUserValidity(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onFailureUserValidity(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    } //end of user validity listener's implemented methods
 
-    // GET method to get a Joke from remote server
-    private void getJokeFromServer(String userId) {
 
-        Call<ServerResponse> call = apiInterface.getJoke(userId);
-
-        call.enqueue(new Callback<ServerResponse>() {
-            @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                ServerResponse validity = response.body();
-                jokeTextView.setText(validity.getMessage());
-            }
-
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-        });
+    /*
+    implemented methods for getting joke listener
+     */
+    @Override
+    public void onSuccessGetJoke(String joke) {
+        jokeTextView.setText(joke);
     }
-    
 
-    private void viewInitialization() {
-        userIdEditText = (EditText) findViewById(R.id.login_id);
-        passwordEditText = (EditText) findViewById(R.id.login_password);
-        jokeUserIdEditText = (EditText) findViewById(R.id.user_id_for_joke);
-        jokeTextView = (TextView) findViewById(R.id.jokeTextView);
-    }
+    @Override
+    public void onFailureGetJoke(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    } //end of getting joke's implemented methods
+
 }
