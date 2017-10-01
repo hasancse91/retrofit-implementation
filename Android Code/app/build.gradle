@@ -30,4 +30,7 @@ dependencies {
     // for Retrofit and GSON library
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+
+    //pretty logger library
+    compile 'com.orhanobut:logger:2.1.1'
 }
