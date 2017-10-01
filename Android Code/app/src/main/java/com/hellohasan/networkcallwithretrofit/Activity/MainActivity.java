@@ -16,8 +16,6 @@ import com.orhanobut.logger.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
     private EditText userIdEditText;
     private EditText passwordEditText;
     private EditText jokeUserIdEditText;
