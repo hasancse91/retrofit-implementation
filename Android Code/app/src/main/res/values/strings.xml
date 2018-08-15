@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Network Call with Retrofit</string>
+    <string name="id_pass">User ID: hasan, Password: 123</string>
+    <string name="user_id_hint">Give User ID for a joke</string>
+    <string name="get_a_joke">Get a Joke</string>
+    <string name="user_id">User ID</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
 </resources>

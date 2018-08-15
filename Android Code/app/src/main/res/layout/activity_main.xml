@@ -1,60 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/activity_main"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="com.hellohasan.networkcallwithretrofit.Activity.MainActivity">
-
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User ID: hasan\nPassword: 123"
-        android:textSize="20sp"/>
-
-    <EditText
-        android:id="@+id/login_id"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="User ID"/>
-
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="numberPassword"/>
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log In"
-        android:onClick="buttonClickEvent"/>
+        android:text="@string/id_pass"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/user_id_for_joke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Give User ID for a joke"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="8dp"
+        android:hint="@string/user_id_hint"
+        android:text="hasan" />
 
     <Button
         android:id="@+id/joke_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get a Joke"
-        android:onClick="buttonClickEvent"/>
+        android:onClick="buttonClickEvent"
+        android:text="@string/get_a_joke" />
 
     <TextView
         android:id="@+id/jokeTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        tools:text="This is a demo joke." />
+
+    <EditText
+        android:id="@+id/login_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="@string/user_id" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:inputType="numberPassword" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="buttonClickEvent"
+        android:text="@string/log_in" />
 
 </LinearLayout>

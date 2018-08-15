@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     // Login button event
     public void buttonClickEvent(View view){
 
@@ -57,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
             user.setPassword(password);
 
             checkUserValidity(user);
-        }
-        else {
+        } else {
             String userId;
 
             userId = jokeUserIdEditText.getText().toString();
@@ -68,6 +66,25 @@ public class MainActivity extends AppCompatActivity {
         
     }
 
+
+    // GET method to get a Joke from remote server
+    private void getJokeFromServer(String userId) {
+
+        Call<ServerResponse> call = apiInterface.getJoke(userId);
+
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                ServerResponse validity = response.body();
+                jokeTextView.setText(validity.getMessage());
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
 
     // POST method to determine user validity
     private void checkUserValidity(User userCredential){
@@ -91,30 +108,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // GET method to get a Joke from remote server
-    private void getJokeFromServer(String userId) {
 
-        Call<ServerResponse> call = apiInterface.getJoke(userId);
-
-        call.enqueue(new Callback<ServerResponse>() {
-            @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                ServerResponse validity = response.body();
-                jokeTextView.setText(validity.getMessage());
-            }
-
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-        });
-    }
     
 
     private void viewInitialization() {
-        userIdEditText = (EditText) findViewById(R.id.login_id);
-        passwordEditText = (EditText) findViewById(R.id.login_password);
-        jokeUserIdEditText = (EditText) findViewById(R.id.user_id_for_joke);
-        jokeTextView = (TextView) findViewById(R.id.jokeTextView);
+        userIdEditText = findViewById(R.id.login_id);
+        passwordEditText = findViewById(R.id.login_password);
+        jokeUserIdEditText = findViewById(R.id.user_id_for_joke);
+        jokeTextView = findViewById(R.id.jokeTextView);
     }
 }

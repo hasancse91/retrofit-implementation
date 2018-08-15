@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Retrofit Simple Get Request</string>
+    <string name="show_my_ip_address">Show My IP Address</string>
+    <string name="ip_address">IP Address</string>
+</resources>
