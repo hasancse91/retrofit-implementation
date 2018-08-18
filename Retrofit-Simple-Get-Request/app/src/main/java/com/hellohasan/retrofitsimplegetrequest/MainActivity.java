@@ -16,8 +16,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ApiInterface apiInterface = RetrofitApiClient.getClient().create(ApiInterface.class);
-
     private TextView ipAddressTextView;
     private TextView cityTextView;
     private TextView countryTextView;
@@ -37,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public void showMyIp(View view) {
 
         progressBar.setVisibility(View.VISIBLE); //network call will start. So, show progress bar
+
+        ApiInterface apiInterface = RetrofitApiClient.getClient().create(ApiInterface.class);
 
         Call<ServerResponse> call = apiInterface.getMyIp();
         call.enqueue(new Callback<ServerResponse>() {

@@ -8,6 +8,6 @@ import retrofit2.http.GET;
 
 public interface ApiInterface {
 
-    @GET("/json") //Here, `/json` is the PATH PARAMETER
+    @GET("/json") //Here, `json` is the PATH PARAMETER
     Call<ServerResponse> getMyIp();
 }
