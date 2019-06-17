@@ -107,10 +107,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
-    
-
     private void viewInitialization() {
         userIdEditText = findViewById(R.id.login_id);
         passwordEditText = findViewById(R.id.login_password);

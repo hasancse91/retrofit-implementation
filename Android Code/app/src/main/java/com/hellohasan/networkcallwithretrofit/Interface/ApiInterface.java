@@ -16,6 +16,5 @@ public interface ApiInterface {
 
     @GET("/retrofit_get_post/server_side_code.php")
     Call<ServerResponse> getJoke(@Query("user_id") String userId);
-
 }
 
