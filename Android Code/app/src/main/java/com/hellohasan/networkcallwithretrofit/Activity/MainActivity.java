@@ -1,6 +1,7 @@
 package com.hellohasan.networkcallwithretrofit.Activity;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Initialize the view like EditText, TextView
         viewInitialization();
-
     }
 
     // Login button event
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         
     }
 
-
     // GET method to get a Joke from remote server
     private void getJokeFromServer(String userId) {
 
@@ -74,13 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+            public void onResponse(@NonNull Call<ServerResponse> call, @NonNull Response<ServerResponse> response) {
                 ServerResponse validity = response.body();
-                jokeTextView.setText(validity.getMessage());
+                if (validity != null)
+                    jokeTextView.setText(validity.getMessage());
+                else
+                    jokeTextView.setText("Server response is null");
             }
 
             @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ServerResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
@@ -94,14 +96,18 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ServerResponse>() {
 
             @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+            public void onResponse(@NonNull Call<ServerResponse> call, @NonNull Response<ServerResponse> response) {
 
                 ServerResponse validity = response.body();
-                Toast.makeText(getApplicationContext(), validity.getMessage(), Toast.LENGTH_LONG).show();
+
+                if (validity != null)
+                    Toast.makeText(getApplicationContext(), validity.getMessage(), Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(getApplicationContext(), "Server response is null", Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(@NonNull Call call, @NonNull Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
